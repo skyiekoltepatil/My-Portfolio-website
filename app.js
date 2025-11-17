@@ -282,13 +282,14 @@ window.addEventListener('load', () => {
 
 // 3D Profile Card - Mouse Tracking & Tilt Effect
 const profileCard3D = document.getElementById('profileCard3D');
+const cardInner = profileCard3D ? profileCard3D.querySelector('.card-inner') : null;
 
-if (profileCard3D && window.innerWidth > 1024) {
+if (cardInner && window.innerWidth > 1024) {
     let isHovering = false;
     let animationFrame = null;
-    
+
     // Smooth animation values
-    const smoothness = 0.15;
+    const smoothness = 0.05;
     let currentRotateX = 0;
     let currentRotateY = 0;
     let targetRotateX = 0;
@@ -297,77 +298,77 @@ if (profileCard3D && window.innerWidth > 1024) {
     let currentPointerY = 50;
     let targetPointerX = 50;
     let targetPointerY = 50;
-    
+
     function updateCardTransform() {
         // Smoothly interpolate values
         currentRotateX += (targetRotateX - currentRotateX) * smoothness;
         currentRotateY += (targetRotateY - currentRotateY) * smoothness;
         currentPointerX += (targetPointerX - currentPointerX) * smoothness;
         currentPointerY += (targetPointerY - currentPointerY) * smoothness;
-        
+
         // Apply transforms
         profileCard3D.style.setProperty('--rotate-x', `${currentRotateX}deg`);
         profileCard3D.style.setProperty('--rotate-y', `${currentRotateY}deg`);
         profileCard3D.style.setProperty('--pointer-x', `${currentPointerX}%`);
         profileCard3D.style.setProperty('--pointer-y', `${currentPointerY}%`);
-        
+
         // Calculate opacity based on distance from center
         const distanceFromCenter = Math.sqrt(
             Math.pow(currentPointerX - 50, 2) + Math.pow(currentPointerY - 50, 2)
         );
         const opacity = Math.min(distanceFromCenter / 50, 1);
         profileCard3D.style.setProperty('--card-opacity', opacity);
-        
+
         // Continue animation loop while hovering
         if (isHovering) {
             animationFrame = requestAnimationFrame(updateCardTransform);
         }
     }
-    
-    profileCard3D.addEventListener('mouseenter', () => {
+
+    cardInner.addEventListener('mouseenter', () => {
         isHovering = true;
         profileCard3D.classList.add('active');
         updateCardTransform();
     });
-    
-    profileCard3D.addEventListener('mouseleave', () => {
+
+    cardInner.addEventListener('mouseleave', () => {
         isHovering = false;
         profileCard3D.classList.remove('active');
-        
+
         // Reset to center
         targetRotateX = 0;
         targetRotateY = 0;
         targetPointerX = 50;
         targetPointerY = 50;
         profileCard3D.style.setProperty('--card-opacity', '0');
-        
+
         if (animationFrame) {
             cancelAnimationFrame(animationFrame);
         }
     });
-    
-    profileCard3D.addEventListener('mousemove', (e) => {
+
+    cardInner.addEventListener('mousemove', (e) => {
         if (!isHovering) return;
-        
-        const rect = profileCard3D.getBoundingClientRect();
+
+        const rect = cardInner.getBoundingClientRect();
         const x = e.clientX - rect.left;
         const y = e.clientY - rect.top;
-        
+
         // Calculate percentage position
         const percentX = (x / rect.width) * 100;
         const percentY = (y / rect.height) * 100;
-        
+
         // Calculate rotation (inverted for natural feel)
-        const rotateY = ((percentX - 50) / 50) * 5; // -5 to 5 degrees
-        const rotateX = ((percentY - 50) / 50) * -5; // -5 to 5 degrees
-        
+        const rotateY = ((percentX - 50) / 50) * 20; // -20 to 20 degrees
+        const rotateX = ((percentY - 50) / 50) * -20; // -20 to 20 degrees
+
         // Update target values
         targetRotateX = rotateX;
         targetRotateY = rotateY;
         targetPointerX = percentX;
         targetPointerY = percentY;
     });
-    
+
     // Initial animation on page load
     setTimeout(() => {
         profileCard3D.style.setProperty('--card-opacity', '0');
