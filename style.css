@@ -10,22 +10,11 @@
   --gradient-1: linear-gradient(135deg, #6366F1 0%, #EC4899 100%);
   --gradient-2: linear-gradient(135deg, #EC4899 0%, #F59E0B 100%);
 }
+
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-}
-
-:root {
-    --primary-color: #6366F1;
-    --secondary-color: #EC4899;
-    --dark-bg: #0F172A;
-    --card-bg: #1E293B;
-    --text-primary: #F1F5F9;
-    --text-secondary: #94A3B8;
-    --border-color: #334155;
-    --gradient-1: linear-gradient(135deg, #6366F1 0%, #EC4899 100%);
-    --gradient-2: linear-gradient(135deg, #EC4899 0%, #F59E0B 100%);
 }
 
 html {
@@ -346,16 +335,19 @@ body {
     position: relative;
     overflow: hidden;
     padding-top: 70px;
+    /* Background set to pure black */
+    background-color: #000000;
 }
 
-
-@keyframes gradientMove {
-    0%, 100% {
-        opacity: 0.5;
-    }
-    50% {
-        opacity: 0.8;
-    }
+/* New Canvas Background */
+#particleCanvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    pointer-events: none; /* Let clicks pass through */
 }
 
 .hero-content {
@@ -417,23 +409,6 @@ body {
     gap: 20px;
     flex-wrap: wrap;
 }
-
-.hero-image {
-    flex: 0 0 auto;
-}
-
-
-
-@keyframes float {
-    0%, 100% {
-        transform: translateY(0px);
-    }
-    50% {
-        transform: translateY(-20px);
-    }
-}
-
-
 
 /* Buttons */
 .btn {
@@ -510,7 +485,6 @@ body {
 .about-profile-card {
     flex: 0 0 400px;
     animation-delay: 0.2s;
-    perspective: 1000px; /* Moved perspective to parent for proper 3D transforms */
 }
 
 /* About Text Content Column */
@@ -519,7 +493,7 @@ body {
     animation-delay: 0.1s;
 }
 
-/* 3D Profile Card Styles */
+/* 3D Profile Card Styles - STATIC VERSION */
 .profile-card-3d {
     position: relative;
     width: 100%;
@@ -527,43 +501,7 @@ body {
     max-height: 540px;
     aspect-ratio: 0.718;
     border-radius: 30px;
-    transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1);
-    transform-style: preserve-3d;
-    --pointer-x: 50%;
-    --pointer-y: 50%;
-    --pointer-from-center: 0;
-    --rotate-x: 0deg;
-    --rotate-y: 0deg;
-    --card-opacity: 0;
-    --background-x: 50%;
-    --background-y: 50%;
-}
-
-.profile-card-3d.active {
-    transform: rotateX(var(--rotate-x)) rotateY(var(--rotate-y)) translateZ(20px);
-    transition: transform 0.1s ease-out;
-}
-
-/* Card Glow - Behind Gradient Effect */
-.card-glow {
-    position: absolute;
-    inset: -20px;
-    border-radius: 30px;
-    background: radial-gradient(
-        farthest-side circle at var(--pointer-x) var(--pointer-y),
-        hsla(266, 100%, 90%, var(--card-opacity)) 4%,
-        hsla(266, 50%, 80%, calc(var(--card-opacity) * 0.75)) 10%,
-        hsla(266, 25%, 70%, calc(var(--card-opacity) * 0.5)) 50%,
-        hsla(271, 70%, 67%, 0) 100%
-    );
-    filter: blur(40px) saturate(1.5);
-    opacity: 0;
-    transition: opacity 0.6s ease;
-    z-index: -1;
-}
-
-.profile-card-3d:hover .card-glow {
-    opacity: 1;
+    --card-opacity: 0; 
 }
 
 /* Card Inner Container */
@@ -576,39 +514,6 @@ body {
     background: linear-gradient(145deg, #60496e8c 0%, #71C4FF44 100%);
     box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
     border: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-/* Holographic Background Effect */
-.card-inner::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: radial-gradient(
-        farthest-side circle at var(--pointer-x) var(--pointer-y),
-        rgba(147, 112, 219, 0.8) 0%,
-        rgba(99, 102, 241, 0.4) 20%,
-        rgba(236, 72, 153, 0.3) 40%,
-        transparent 80%
-    );
-    mix-blend-mode: color-dodge;
-    opacity: var(--card-opacity);
-    transition: opacity 0.6s ease;
-}
-
-/* Glare Effect */
-.card-inner::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: radial-gradient(
-        farthest-side circle at var(--pointer-x) var(--pointer-y),
-        rgba(255, 255, 255, 0.8) 0%,
-        rgba(255, 255, 255, 0.4) 5%,
-        transparent 30%
-    );
-    mix-blend-mode: overlay;
-    opacity: calc(var(--card-opacity) * 0.5);
-    transition: opacity 0.6s ease;
 }
 
 /* Card Content Wrapper */
@@ -826,15 +731,6 @@ body {
         font-size: 6rem;
     }
     
-    /* Disable 3D effects on mobile for performance */
-    .profile-card-3d.active {
-        transform: none;
-    }
-    
-    .card-glow {
-        display: none;
-    }
-    
     .about-content {
         width: 100%;
     }
@@ -1015,8 +911,6 @@ body {
     transform: translateX(5px);
 }
 
-
-
 /* Contact Section */
 .contact {
     background: var(--dark-bg);
@@ -1185,8 +1079,6 @@ body {
     .about-content {
         grid-template-columns: 1fr;
     }
-    
-
     
     .contact-content {
         grid-template-columns: 1fr;
