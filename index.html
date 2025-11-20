@@ -10,10 +10,10 @@
     <!-- Navigation -->
     <nav id="navbar">
         <div class="nav-container">
-            <div  class="nav-brand">skyie@</div>
+            <div class="nav-brand">skyie@</div>
             <div class="nav-links">
-                <a href="#about" class="nav-link">Experience</a>
                 <a href="#projects" class="nav-link">Work</a>
+                <a href="#about" class="nav-link">Experience</a>
                 <a href="#contact" class="nav-link">Contact</a>
             </div>
             <a href="#" class="nav-resume-btn" download>
@@ -54,13 +54,13 @@
 
     <!-- Hero Section -->
     <section id="home" class="hero">
-        <div class="hero-background"></div>
+        <!-- Added Particle Canvas -->
+        <canvas id="particleCanvas"></canvas>
         <div class="hero-content">
             <div class="hero-text">
                 <h1 class="hero-title">
                     <span class="gradient-text">Hello M </span>
                     <span>🙋 </span>
-                    <br>
                     <span class="gradient-text">Skyie@</span>
                 </h1>
                 <p class="hero-subtitle">
@@ -71,8 +71,6 @@
                     <a href="#contact" class="btn btn-secondary">reach out to me</a>
                 </div>
             </div>
-                </div>
-            </div>
         </div>
     </section>
 
@@ -81,32 +79,27 @@
         <div class="container">
             <h2 class="section-title fade-in">About Me</h2>
             <div class="about-container">
-                <!-- 3D Profile Card (Desktop Left / Mobile Top) -->
-                <div class="about-profile-card fade-in">
+                <!-- 3D Profile Card Column -->
+                <div class="about-profile-card">
                     <div class="profile-card-3d" id="profileCard3D">
-                        <div class="card-glow"></div>
                         <div class="card-inner">
                             <div class="card-content-wrapper">
                                 <div class="card-header">
                                     <h3 class="card-name">Skyie@</h3>
-                                    <p class="card-title">Video Editor &amp; Data Science Student</p>
+                                    <p class="card-title">Video Editor & AI Student</p>
                                 </div>
                                 <div class="card-avatar-large">
-                                    <div class="avatar-gradient">
-                                        <img src="photo.jpeg" alt="#" class="avatar-image">
-                                    </div>
+                                    <div class="avatar-gradient">S</div>
                                 </div>
-                            </div>
-                            <div class="card-user-info">
-                                <div class="user-info-content">
-                                    <div class="user-mini-avatar">
-                                        <img src="photo.jpeg" alt="#" class="avatar-image">
-                                    </div>
-                                    <div class="user-details">
-                                        <div class="user-handle">@Skyie__</div>
-                                        <div class="user-status">
-                                            <span class="status-dot"></span>
-                                            Available for work
+                                <div class="card-user-info">
+                                    <div class="user-info-content">
+                                        <div class="user-mini-avatar">S</div>
+                                        <div class="user-details">
+                                            <div class="user-handle">@skyie</div>
+                                            <div class="user-status">
+                                                <span class="status-dot"></span>
+                                                Available for projects
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -115,51 +108,60 @@
                     </div>
                 </div>
 
-                <!-- About Text Content (Desktop Right / Mobile Bottom) -->
-            <div class="about-content">
-                <div class="about-text fade-in">
-                    <p class="about-intro">Hi, I’m Skyie@, a 17-year-old learner passionate about the world of Artificial Intelligence and Data Science, currently studying at Alard University, Pune.
-
-I’m constantly exploring how technology can shape the future — from intelligent systems to creative storytelling through visuals. Alongside my academic journey, I’m also a video editor, blending logic and creativity to bring ideas to life.
-
-When I’m not coding or editing, you’ll find me enjoying cricket, gaming, drawing, badminton, or tennis — always chasing creativity, energy, and new challenges.
-
-I believe learning never stops, and every project is a step toward innovation and self-growth.</p>
-                    <div class="about-highlights">
-                        <div class="highlight-item">
-                            <h3>🎬 Video Editing</h3>
-                            <p>Expert in Adobe Premiere Pro, After Effects, and DaVinci Resolve. Specialized in motion graphics, color grading, and creating engaging content for brands and creators.</p>
+                <!-- About Text Content Column -->
+                <div class="about-content">
+                    <div class="about-text fade-in">
+                        <p class="about-intro">
+                            Hi, I'm Skyie@, a 17-year-old learner passionate about the world of Artificial Intelligence and Data Science, currently studying at Alard University, Pune.
+                        </p>
+                        <p>
+                            I'm constantly exploring how technology can shape the future — from intelligent systems to creative storytelling through visuals. Alongside my academic journey, I'm also a video editor, blending logic and creativity to bring ideas to life.
+                        </p>
+                        <p>
+                            When I'm not coding or editing, you'll find me enjoying cricket, gaming, drawing, badminton, or tennis — always chasing creativity, energy, and new challenges.
+                        </p>
+                        <p>
+                            I believe learning never stops, and every project is a step toward innovation and self-growth.
+                        </p>
+                        <div class="about-highlights">
+                            <div class="highlight-item">
+                                <h3>🎬 Video Editing</h3>
+                                <p>
+                                    Expert in Adobe Premiere Pro, After Effects, and DaVinci Resolve. Specialized in motion graphics, color grading, and creating engaging content for brands and creators.
+                                </p>
+                            </div>
+                            <div class="highlight-item">
+                                <h3>📊 Data Science</h3>
+                                <p>
+                                    Proficient in Python, machine learning, and data visualization. Experienced in building predictive models, interactive dashboards, and extracting actionable insights from data.
+                                </p>
+                            </div>
+                            <div class="highlight-item">
+                                <h3>💡 What Drives Me</h3>
+                                <p>
+                                    Curiosity is my biggest motivation. I'm driven by the desire to learn something new every day, to combine logic with imagination, and to create work that inspires others.
+                                </p>
+                                <p>
+                                    My goal is simple: to grow, innovate, and keep pushing the boundaries of what's possible.
+                                </p>
+                            </div>
                         </div>
-                        <div class="highlight-item">
-                            <h3>📊 Data Science</h3>
-                            <p>Proficient in Python, machine learning, and data visualization. Experienced in building predictive models, interactive dashboards, and extracting actionable insights from data.</p>
+                        <div class="social-links">
+                            <a href="https://www.linkedin.com/in/skyie-koltepatil-637947385/" target="_blank" class="social-link" title="LinkedIn">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
+                                    <rect x="2" y="9" width="4" height="12"></rect>
+                                    <circle cx="4" cy="4" r="2"></circle>
+                                </svg>
+                            </a>
+                            <a href="https://github.com/skyiekoltepatil" target="_blank" class="social-link" title="GitHub">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+                                </svg>
+                            </a>
                         </div>
-                        <div class="highlight-item">
-                            <h3>💡 What Drives Me</h3>
-                            <p>Curiosity is my biggest motivation.
-I’m driven by the desire to learn something new every day, to combine logic with imagination, and to create work that inspires others.</p>
-<br>
-<pr>My goal is simple: to grow, innovate, and keep pushing the boundaries of what’s possible.</pr>
-                        </div>
-                    </div>
-                    <div class="social-links">
-                        <a href="https://www.linkedin.com/in/bhushan-kolte-458561380/" target="_blank" class="social-link" title="LinkedIn">
-                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
-                                <rect x="2" y="9" width="4" height="12"></rect>
-                                <circle cx="4" cy="4" r="2"></circle>
-                            </svg>
-                        </a>
-                        <a href="https://github.com/skyiekoltepatil" target="_blank" class="social-link" title="GitHub">
-                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
-                            </svg>
-                        </a>
-                       
                     </div>
                 </div>
-
-            </div>
             </div>
         </div>
     </section>
@@ -359,7 +361,7 @@ I’m driven by the desire to learn something new every day, to combine logic wi
                 <div class="footer-section">
                     <h4>Connect</h4>
                     <div class="footer-social">
-                        <a href="https://www.linkedin.com/in/bhushan-kolte-458561380/" target="_blank" title="LinkedIn">
+                        <a href="https://www.linkedin.com/in/skyie-koltepatil-637947385/" target="_blank" title="LinkedIn">
                             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                 <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
                                 <rect x="2" y="9" width="4" height="12"></rect>
@@ -376,7 +378,7 @@ I’m driven by the desire to learn something new every day, to combine logic wi
             </div>
             <div class="footer-bottom">
                 <p>&copy; 2025 skyie@Portfolio. All rights reserved.</p>
-                <button  id="backToTop" class="back-to-top">
+                <button id="backToTop" class="back-to-top">
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <path d="M12 19V5M5 12l7-7 7 7"/>
                     </svg>

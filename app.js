@@ -1,5 +1,7 @@
 // Smooth Scrolling
 const navLinks = document.querySelectorAll('.nav-link, .mobile-link, .footer-links a');
+const body = document.body;
+
 navLinks.forEach(link => {
     link.addEventListener('click', (e) => {
         e.preventDefault();
@@ -29,7 +31,6 @@ navLinks.forEach(link => {
 // Mobile Menu Toggle with Staggered Animation
 const hamburger = document.getElementById('hamburger');
 const mobileMenu = document.getElementById('mobileMenu');
-const body = document.body;
 
 hamburger.addEventListener('click', () => {
     const isActive = hamburger.classList.contains('active');
@@ -160,74 +161,6 @@ viewDetailsButtons.forEach(button => {
     });
 });
 
-
-
-// Contact Form Validation and Submission
-const contactForm = document.getElementById('contactForm');
-const formInputs = contactForm.querySelectorAll('.form-input');
-
-formInputs.forEach(input => {
-    input.addEventListener('blur', () => {
-        validateField(input);
-    });
-    
-    input.addEventListener('input', () => {
-        if (input.classList.contains('error')) {
-            validateField(input);
-        }
-    });
-});
-
-function validateField(field) {
-    const value = field.value.trim();
-    const errorMessage = field.parentElement.querySelector('.error-message');
-    
-    if (value === '') {
-        field.classList.add('error');
-        errorMessage.textContent = 'This field is required';
-        errorMessage.classList.add('show');
-        return false;
-    }
-    
-    if (field.type === 'email') {
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        if (!emailRegex.test(value)) {
-            field.classList.add('error');
-            errorMessage.textContent = 'Please enter a valid email';
-            errorMessage.classList.add('show');
-            return false;
-        }
-    }
-    
-    field.classList.remove('error');
-    errorMessage.classList.remove('show');
-    return true;
-}
-
-contactForm.addEventListener('submit', (e) => {
-    e.preventDefault();
-    
-    let isValid = true;
-    formInputs.forEach(input => {
-        if (!validateField(input)) {
-            isValid = false;
-        }
-    });
-    
-    if (isValid) {
-        // Show loading state
-        const submitBtn = contactForm.querySelector('.btn-submit');
-        submitBtn.classList.add('loading');
-        
-        // Simulate form submission
-        setTimeout(() => {
-            submitBtn.classList.remove('loading');
-            alert('Thank you for your message! I\'ll get back to you soon.');
-            contactForm.reset();
-        }, 2000);
-    }
-});
-
 // Back to Top Button
 const backToTopBtn = document.getElementById('backToTop');
 
@@ -280,101 +213,106 @@ window.addEventListener('load', () => {
     });
 });
 
-// 3D Profile Card - Mouse Tracking & Tilt Effect
-const profileCard3D = document.getElementById('profileCard3D');
 
-if (profileCard3D && window.innerWidth > 1024) {
-    let isHovering = false;
-    let animationFrame = null;
-    
-    // Smooth animation values
-    const smoothness = 0.15;
-    let currentRotateX = 0;
-    let currentRotateY = 0;
-    let targetRotateX = 0;
-    let targetRotateY = 0;
-    let currentPointerX = 50;
-    let currentPointerY = 50;
-    let targetPointerX = 50;
-    let targetPointerY = 50;
-    
-    function updateCardTransform() {
-        // Smoothly interpolate values
-        currentRotateX += (targetRotateX - currentRotateX) * smoothness;
-        currentRotateY += (targetRotateY - currentRotateY) * smoothness;
-        currentPointerX += (targetPointerX - currentPointerX) * smoothness;
-        currentPointerY += (targetPointerY - currentPointerY) * smoothness;
-        
-        // Apply transforms
-        profileCard3D.style.setProperty('--rotate-x', `${currentRotateX}deg`);
-        profileCard3D.style.setProperty('--rotate-y', `${currentRotateY}deg`);
-        profileCard3D.style.setProperty('--pointer-x', `${currentPointerX}%`);
-        profileCard3D.style.setProperty('--pointer-y', `${currentPointerY}%`);
-        
-        // Calculate opacity based on distance from center
-        const distanceFromCenter = Math.sqrt(
-            Math.pow(currentPointerX - 50, 2) + Math.pow(currentPointerY - 50, 2)
-        );
-        const opacity = Math.min(distanceFromCenter / 50, 1);
-        profileCard3D.style.setProperty('--card-opacity', opacity);
-        
-        // Continue animation loop while hovering
-        if (isHovering) {
-            animationFrame = requestAnimationFrame(updateCardTransform);
-        }
+// --- PARTICLE ANIMATION (Cosmos/Starry Night) ---
+const canvas = document.getElementById('particleCanvas');
+const ctx = canvas.getContext('2d');
+let particlesArray;
+
+// Set canvas size
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+
+// Mouse Interaction Object
+let mouse = {
+    x: null,
+    y: null,
+    radius: 150 // Interaction radius
+}
+
+window.addEventListener('mousemove', function(event) {
+    mouse.x = event.x;
+    mouse.y = event.y;
+});
+
+// Reset mouse position when it leaves the window
+window.addEventListener('mouseout', function() {
+    mouse.x = undefined;
+    mouse.y = undefined;
+});
+
+// Handle resize
+window.addEventListener('resize', () => {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+    init();
+});
+
+// Create Particle Class
+class Particle {
+    constructor() {
+        this.x = Math.random() * canvas.width;
+        this.y = Math.random() * canvas.height;
+        // INCREASED SIZE: Random size between 1px and 5px
+        this.size = Math.random() * 4 + 1; 
+        this.speedX = (Math.random() * 1) - 0.5; // Slightly faster movement
+        this.speedY = (Math.random() * 1) - 0.5;
+        this.opacity = Math.random() * 0.5 + 0.2; 
+        this.density = (Math.random() * 30) + 1; // Density defines how heavy/reactive the particle is
     }
-    
-    profileCard3D.addEventListener('mouseenter', () => {
-        isHovering = true;
-        profileCard3D.classList.add('active');
-        updateCardTransform();
-    });
-    
-    profileCard3D.addEventListener('mouseleave', () => {
-        isHovering = false;
-        profileCard3D.classList.remove('active');
+    update() {
+        // MOUSE INTERACTION LOGIC
+        let dx = mouse.x - this.x;
+        let dy = mouse.y - this.y;
+        let distance = Math.sqrt(dx * dx + dy * dy);
         
-        // Reset to center
-        targetRotateX = 0;
-        targetRotateY = 0;
-        targetPointerX = 50;
-        targetPointerY = 50;
-        profileCard3D.style.setProperty('--card-opacity', '0');
-        
-        if (animationFrame) {
-            cancelAnimationFrame(animationFrame);
+        if (distance < mouse.radius) {
+            const forceDirectionX = dx / distance;
+            const forceDirectionY = dy / distance;
+            const maxDistance = mouse.radius;
+            const force = (maxDistance - distance) / maxDistance;
+            const directionX = forceDirectionX * force * this.density;
+            const directionY = forceDirectionY * force * this.density;
+            
+            // Move away from mouse
+            this.x -= directionX;
+            this.y -= directionY;
         }
-    });
-    
-    profileCard3D.addEventListener('mousemove', (e) => {
-        if (!isHovering) return;
-        
-        const rect = profileCard3D.getBoundingClientRect();
-        const x = e.clientX - rect.left;
-        const y = e.clientY - rect.top;
-        
-        // Calculate percentage position
-        const percentX = (x / rect.width) * 100;
-        const percentY = (y / rect.height) * 100;
-        
-        // Calculate rotation (inverted for natural feel)
-        const rotateY = ((percentX - 50) / 50) * 5; // -5 to 5 degrees
-        const rotateX = ((percentY - 50) / 50) * -5; // -5 to 5 degrees
-        
-        // Update target values
-        targetRotateX = rotateX;
-        targetRotateY = rotateY;
-        targetPointerX = percentX;
-        targetPointerY = percentY;
-    });
-    
-    // Initial animation on page load
-    setTimeout(() => {
-        profileCard3D.style.setProperty('--card-opacity', '0');
-    }, 100);
+
+        this.x += this.speedX;
+        this.y += this.speedY;
+
+        // Wrap around screen
+        if (this.x > canvas.width) this.x = 0;
+        if (this.x < 0) this.x = canvas.width;
+        if (this.y > canvas.height) this.y = 0;
+        if (this.y < 0) this.y = canvas.height;
+    }
+    draw() {
+        ctx.fillStyle = `rgba(255, 255, 255, ${this.opacity})`;
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+        ctx.fill();
+    }
 }
 
-// Disable 3D effects on mobile/tablet
-if (window.innerWidth <= 1024 && profileCard3D) {
-    profileCard3D.style.setProperty('--card-opacity', '0');
+function init() {
+    particlesArray = [];
+    const numberOfParticles = 150; // Adjust for density
+    for (let i = 0; i < numberOfParticles; i++) {
+        particlesArray.push(new Particle());
+    }
 }
+
+function animate() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    for (let i = 0; i < particlesArray.length; i++) {
+        particlesArray[i].update();
+        particlesArray[i].draw();
+    }
+    requestAnimationFrame(animate);
+}
+
+// Start animation
+init();
+animate();
