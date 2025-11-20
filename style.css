@@ -353,13 +353,13 @@ body {
 .hero-content {
     position: relative;
     z-index: 1;
-    min-width: 90%;
-    min-height: 50vh;
+    min-width: 30%;
+    min-height: 10vh;
     margin: 0 auto;
-    padding: 0 20px;
+    padding: 0 50px;
     display: flex;
-    align-items: left center;
-    gap: 60px;
+    align-items:  center;
+    gap: 80px;
 }
 
 .hero-text {
@@ -367,8 +367,8 @@ body {
 }
 
 .hero-title {
-    font-size: 6rem;
-    font-weight: 800;
+    font-size: 5rem;
+    font-weight: 500;
     line-height: 1.2;
     margin-bottom: 20px;
 }
