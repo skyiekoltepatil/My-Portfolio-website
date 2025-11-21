@@ -485,3 +485,51 @@ function generateResponse(input) {
     // Default response
     return "That's an interesting question! While I'm just a bot, I'd suggest contacting Skyie directly at thatskyie7@gmail.com for more specific details. 😊";
 }
+
+/* =========================================
+   3D PROFILE CARD HOVER LOGIC
+   ========================================= */
+
+const profileCard = document.getElementById('profileCard3D');
+if (profileCard) {
+    const cardInner = profileCard.querySelector('.card-inner');
+
+    profileCard.addEventListener('mousemove', (e) => {
+        // Force the card to stay in "active" mode by removing transition
+        cardInner.classList.remove('reset-transition');
+
+        const rect = profileCard.getBoundingClientRect();
+        
+        // Calculate mouse position relative to center of card
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        
+        // Calculate rotation (max +/- 15 degrees)
+        // RotateY: Mouse Left -> Rotate Negative (Left goes back? No, standard 3D is other way)
+        // Let's implement standard "Follow Mouse" tilt
+        
+        // Horizontal tilt (RotateY):
+        // If mouse is on left (x < width/2), we want left side to push BACK (rotateY negative) or come FRONT (rotateY positive)?
+        // "Look at mouse" effect: Mouse Left -> Left side tilts back (away). This is standard CSS rotateY negative.
+        const centerX = rect.width / 2;
+        const centerY = rect.height / 2;
+        
+        const rotateY = ((x - centerX) / centerX) * 15; // Max 15deg
+        
+        // Vertical tilt (RotateX):
+        // Mouse Top -> Top pushes back. (rotateX positive)
+        const rotateX = -((y - centerY) / centerY) * 15; // Max 15deg (inverted because positive rotateX tilts top BACK)
+
+        cardInner.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+    });
+
+    profileCard.addEventListener('mouseleave', () => {
+        // Add transition back for smooth reset
+        cardInner.classList.add('reset-transition');
+        cardInner.style.transform = 'rotateX(0deg) rotateY(0deg)';
+    });
+
+    profileCard.addEventListener('mouseenter', () => {
+        cardInner.classList.remove('reset-transition');
+    });
+}

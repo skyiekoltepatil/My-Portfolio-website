@@ -485,6 +485,8 @@ body {
 .about-profile-card {
     flex: 0 0 400px;
     animation-delay: 0.2s;
+    /* ADDED: Perspective for 3D effect */
+    perspective: 1000px;
 }
 
 /* About Text Content Column */
@@ -501,7 +503,9 @@ body {
     max-height: 540px;
     aspect-ratio: 0.718;
     border-radius: 30px;
-    --card-opacity: 0; 
+    --card-opacity: 0;
+    /* ADDED: Transition for mouse leave reset */ 
+    transition: transform 0.5s cubic-bezier(0.23, 1, 0.32, 1);
 }
 
 /* Card Inner Container */
@@ -514,6 +518,16 @@ body {
     background: linear-gradient(145deg, #60496e8c 0%, #71C4FF44 100%);
     box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
     border: 1px solid rgba(255, 255, 255, 0.1);
+    
+    /* ADDED: 3D Properties */
+    transform-style: preserve-3d;
+    transform: rotateX(0) rotateY(0);
+    transition: transform 0.1s; /* Very fast transition for mouse movement to prevent lag */
+}
+
+/* RESET Transition class (applied via JS on mouse leave) */
+.card-inner.reset-transition {
+    transition: transform 0.5s cubic-bezier(0.23, 1, 0.32, 1);
 }
 
 /* Card Content Wrapper */
@@ -524,11 +538,13 @@ body {
     height: 100%;
     padding: 2rem;
     z-index: 2;
+    transform-style: preserve-3d; /* Pass through 3D to children */
 }
 
 /* Card Header */
 .card-header {
     margin-bottom: auto;
+    transform: translateZ(40px); /* 3D Depth */
 }
 
 .card-name {
@@ -540,6 +556,7 @@ body {
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
+    transform: translateZ(30px); /* 3D Depth */
 }
 
 .card-title {
@@ -547,6 +564,7 @@ body {
     color: rgba(255, 255, 255, 0.8);
     font-weight: 500;
     line-height: 1.4;
+    transform: translateZ(20px); /* 3D Depth */
 }
 
 /* Large Avatar at Bottom */
@@ -556,6 +574,7 @@ body {
     border-radius: 20px;
     overflow: hidden;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    transform: translateZ(10px); /* Base 3D Depth */
 }
 
 .avatar-gradient {
@@ -582,6 +601,9 @@ body {
     border-radius: 16px;
     padding: 1rem;
     z-index: 3;
+    
+    transform: translateZ(60px); /* Highest 3D Depth */
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
 }
 
 .user-info-content {
