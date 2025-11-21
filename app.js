@@ -487,7 +487,7 @@ function generateResponse(input) {
 }
 
 /* =========================================
-   3D PROFILE CARD HOVER LOGIC
+   3D PROFILE CARD HOVER LOGIC (FIXED)
    ========================================= */
 
 const profileCard = document.getElementById('profileCard3D');
@@ -505,12 +505,17 @@ if (profileCard) {
         const x = e.clientX - rect.left;
         const y = e.clientY - rect.top;
         
-        // Calculate rotation (max +/- 15 degrees)
+        // Calculate rotation (max +/- 20 degrees) - INCREASED from 15 for better visibility
         const centerX = rect.width / 2;
         const centerY = rect.height / 2;
         
-        const rotateY = ((x - centerX) / centerX) * 15;
-        const rotateX = -((y - centerY) / centerY) * 15;
+        // FIX: Invert X calculation to create "push" effect (hover right -> right goes away)
+        // Old: ((x - centerX) / centerX) * 15; -> Positive value moves right side TOWARDS user
+        // New: -((x - centerX) / centerX) * 20; -> Negative value moves right side AWAY from user
+        const rotateY = -((x - centerX) / centerX) * 20; 
+        
+        // Y calculation remains (hover top -> top goes away)
+        const rotateX = -((y - centerY) / centerY) * 20;
 
         cardInner.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
 
