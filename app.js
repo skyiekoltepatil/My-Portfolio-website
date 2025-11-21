@@ -505,16 +505,12 @@ if (profileCard) {
         const x = e.clientX - rect.left;
         const y = e.clientY - rect.top;
         
-        // Calculate rotation (max +/- 20 degrees) - INCREASED from 15 for better visibility
+        // Calculate rotation (max +/- 20 degrees)
         const centerX = rect.width / 2;
         const centerY = rect.height / 2;
         
-        // FIX: Invert X calculation to create "push" effect (hover right -> right goes away)
-        // Old: ((x - centerX) / centerX) * 15; -> Positive value moves right side TOWARDS user
-        // New: -((x - centerX) / centerX) * 20; -> Negative value moves right side AWAY from user
+        // Invert X calculation to create "push" effect
         const rotateY = -((x - centerX) / centerX) * 20; 
-        
-        // Y calculation remains (hover top -> top goes away)
         const rotateX = -((y - centerY) / centerY) * 20;
 
         cardInner.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
@@ -539,5 +535,57 @@ if (profileCard) {
 
     profileCard.addEventListener('mouseenter', () => {
         cardInner.classList.remove('reset-transition');
+    });
+}
+
+/* =========================================
+   3D CONTACT CARD HOVER LOGIC (NEW)
+   ========================================= */
+
+const contactCard = document.getElementById('contactCard3D');
+if (contactCard) {
+    // NOTE: For contact card, the element rotating is the card itself, not an inner '.card-inner'
+    const glare = contactCard.querySelector('.card-glare');
+
+    contactCard.addEventListener('mousemove', (e) => {
+        // Force the card to stay in "active" mode by removing transition
+        contactCard.classList.remove('reset-transition');
+
+        const rect = contactCard.getBoundingClientRect();
+        
+        // Calculate mouse position relative to center of card
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        
+        // Calculate rotation (max +/- 20 degrees)
+        const centerX = rect.width / 2;
+        const centerY = rect.height / 2;
+        
+        // Same physics as profile card: Push away from mouse
+        const rotateY = -((x - centerX) / centerX) * 10; // Reduced intensity slightly for larger card
+        const rotateX = -((y - centerY) / centerY) * 10;
+
+        contactCard.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+
+        // --- GLARE EFFECT LOGIC ---
+        if (glare) {
+            glare.style.opacity = '1';
+            // Move gradient center to mouse position
+            glare.style.background = `radial-gradient(circle at ${x}px ${y}px, rgba(255,255,255,0.3) 0%, rgba(255,255,255,0) 80%)`;
+        }
+    });
+
+    contactCard.addEventListener('mouseleave', () => {
+        // Add transition back for smooth reset
+        contactCard.classList.add('reset-transition');
+        contactCard.style.transform = 'rotateX(0deg) rotateY(0deg)';
+        
+        if (glare) {
+            glare.style.opacity = '0';
+        }
+    });
+
+    contactCard.addEventListener('mouseenter', () => {
+        contactCard.classList.remove('reset-transition');
     });
 }

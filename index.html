@@ -331,23 +331,33 @@
         </div>
     </section>
 
-    <!-- Contact Section -->
+    <!-- Contact Section with 3D Hover -->
     <section id="contact" class="contact section-padding">
         <div class="container">
-            <div class="contact-card fade-in">
-                <h2 class="contact-title">Let's Collaborate</h2>
-                
-                <p class="contact-text">
-                   I'm always open to discussing new projects, creative ideas, or opportunities to be part of your visions. Feel free to reach out!
-                </p>
-                
-                <a href="mailto:thatskyie7@gmail.com" class="contact-cta-btn">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
-                        <polyline points="22,6 12,13 2,6"></polyline>
-                    </svg>
-                    Say Hello
-                </a>
+            <!-- Wrapper handles fade-in and perspective -->
+            <div class="contact-card-wrapper fade-in">
+                <!-- Card handles 3D rotation -->
+                <div class="contact-card" id="contactCard3D">
+                    <!-- Glare effect -->
+                    <div class="card-glare"></div>
+                    
+                    <div class="contact-content-inner">
+                        <h2 class="contact-title">Let's Collaborate</h2>
+                        
+                        <p class="contact-text">
+                            I'm currently looking for new opportunities. Whether you have a
+                            question or just want to say hi, my inbox is always open!
+                        </p>
+                        
+                        <a href="mailto:thatskyie7@gmail.com" class="contact-cta-btn">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                                <polyline points="22,6 12,13 2,6"></polyline>
+                            </svg>
+                            Say Hello
+                        </a>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
@@ -462,7 +472,6 @@
         </div>
     </div>
 
-    <!-- Linked JS File -->
     <script src="app.js"></script>
 </body>
 </html>
