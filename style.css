@@ -976,7 +976,7 @@ body {
 /* Footer */
 .footer {
     background: var(--card-bg);
-    padding: 60px 0 30px;
+    padding: 20px 0 20px;
 }
 
 .footer-content {
@@ -1001,7 +1001,7 @@ body {
 .footer-links {
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    gap: 1px;
 }
 
 .footer-links a {
@@ -1143,10 +1143,10 @@ body {
 /* Chat Widget Container */
 .chatbot-widget {
     position: fixed;
-    bottom: 100px;
+    bottom: 60px;
     right: 25px;
     width: 380px;
-    height: 600px;
+    height: 550px;
     background: rgba(15, 23, 42, 0.95);
     backdrop-filter: blur(20px);
     border: 1px solid rgba(255, 255, 255, 0.1);
