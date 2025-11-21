@@ -493,6 +493,7 @@ function generateResponse(input) {
 const profileCard = document.getElementById('profileCard3D');
 if (profileCard) {
     const cardInner = profileCard.querySelector('.card-inner');
+    const glare = profileCard.querySelector('.card-glare');
 
     profileCard.addEventListener('mousemove', (e) => {
         // Force the card to stay in "active" mode by removing transition
@@ -505,28 +506,30 @@ if (profileCard) {
         const y = e.clientY - rect.top;
         
         // Calculate rotation (max +/- 15 degrees)
-        // RotateY: Mouse Left -> Rotate Negative (Left goes back? No, standard 3D is other way)
-        // Let's implement standard "Follow Mouse" tilt
-        
-        // Horizontal tilt (RotateY):
-        // If mouse is on left (x < width/2), we want left side to push BACK (rotateY negative) or come FRONT (rotateY positive)?
-        // "Look at mouse" effect: Mouse Left -> Left side tilts back (away). This is standard CSS rotateY negative.
         const centerX = rect.width / 2;
         const centerY = rect.height / 2;
         
-        const rotateY = ((x - centerX) / centerX) * 15; // Max 15deg
-        
-        // Vertical tilt (RotateX):
-        // Mouse Top -> Top pushes back. (rotateX positive)
-        const rotateX = -((y - centerY) / centerY) * 15; // Max 15deg (inverted because positive rotateX tilts top BACK)
+        const rotateY = ((x - centerX) / centerX) * 15;
+        const rotateX = -((y - centerY) / centerY) * 15;
 
         cardInner.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+
+        // --- GLARE EFFECT LOGIC ---
+        if (glare) {
+            glare.style.opacity = '1';
+            // Move gradient center to mouse position
+            glare.style.background = `radial-gradient(circle at ${x}px ${y}px, rgba(255,255,255,0.3) 0%, rgba(255,255,255,0) 80%)`;
+        }
     });
 
     profileCard.addEventListener('mouseleave', () => {
         // Add transition back for smooth reset
         cardInner.classList.add('reset-transition');
         cardInner.style.transform = 'rotateX(0deg) rotateY(0deg)';
+        
+        if (glare) {
+            glare.style.opacity = '0';
+        }
     });
 
     profileCard.addEventListener('mouseenter', () => {
