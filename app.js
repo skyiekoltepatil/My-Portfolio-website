@@ -316,3 +316,276 @@ function animate() {
 // Start animation
 init();
 animate();
+
+
+/* =========================================
+   SKYIE AI CHATBOT LOGIC
+   ========================================= */
+
+const chatbotToggle = document.getElementById('chatbot-toggle');
+const chatbotWidget = document.getElementById('chatbot-widget');
+const chatbotClose = document.getElementById('chatbot-close');
+const chatbotInput = document.getElementById('chatbot-input');
+const chatbotSend = document.getElementById('chatbot-send');
+const chatbotMessages = document.getElementById('chatbot-messages');
+const chatSuggestions = document.getElementById('chat-suggestions');
+
+// Toggle Chatbot
+chatbotToggle.addEventListener('click', () => {
+    chatbotWidget.classList.toggle('active');
+    chatbotToggle.classList.toggle('active');
+    
+    // Check for mobile to hide toggle button
+    if (window.innerWidth <= 480 && chatbotWidget.classList.contains('active')) {
+        chatbotToggle.classList.add('hidden-mobile');
+    } else {
+        chatbotToggle.classList.remove('hidden-mobile');
+    }
+
+    if (chatbotWidget.classList.contains('active')) {
+        setTimeout(() => chatbotInput.focus(), 300);
+    }
+});
+
+// Close Chatbot
+chatbotClose.addEventListener('click', () => {
+    chatbotWidget.classList.remove('active');
+    chatbotToggle.classList.remove('active');
+    chatbotToggle.classList.remove('hidden-mobile');
+});
+
+// Send Message Logic
+chatbotSend.addEventListener('click', sendMessage);
+chatbotInput.addEventListener('keypress', (e) => {
+    if (e.key === 'Enter') sendMessage();
+});
+
+// Function to handle suggestions click
+window.sendSuggestion = function(text) {
+    chatbotInput.value = text;
+    sendMessage();
+}
+
+function sendMessage() {
+    const text = chatbotInput.value.trim();
+    if (text === '') return;
+
+    // Add User Message
+    addMessage(text, 'user');
+    chatbotInput.value = '';
+    
+    // Hide suggestions after first interaction
+    if (chatSuggestions) {
+        chatSuggestions.style.display = 'none';
+    }
+
+    // Simulate Bot Typing
+    showTypingIndicator();
+
+    // Generate Response (Simulated AI)
+    setTimeout(() => {
+        removeTypingIndicator();
+        const response = generateResponse(text);
+        addMessage(response, 'bot');
+    }, 1500); // 1.5s delay for realism
+}
+
+function addMessage(text, sender) {
+    const messageDiv = document.createElement('div');
+    messageDiv.classList.add('chat-message', sender, 'fade-in-msg');
+    
+    let avatarHTML = '';
+    if (sender === 'bot') {
+        avatarHTML = '<div class="chat-avatar">@</div>';
+    }
+
+    messageDiv.innerHTML = `
+        ${avatarHTML}
+        <div class="chat-bubble">
+            <div class="chat-text">${text}</div>
+        </div>
+    `;
+    
+    // Insert before suggestions if they exist and are visible, otherwise append
+    if (chatSuggestions && chatSuggestions.parentNode === chatbotMessages && chatSuggestions.style.display !== 'none') {
+        chatbotMessages.insertBefore(messageDiv, chatSuggestions);
+    } else {
+        chatbotMessages.appendChild(messageDiv);
+    }
+    
+    scrollToBottom();
+}
+
+function showTypingIndicator() {
+    const typingDiv = document.createElement('div');
+    typingDiv.classList.add('chat-message', 'bot', 'typing-indicator-msg');
+    typingDiv.id = 'typing-indicator';
+    typingDiv.innerHTML = `
+        <div class="chat-avatar">@</div>
+        <div class="chat-bubble">
+            <div class="typing-dots">
+                <div class="typing-dot"></div>
+                <div class="typing-dot"></div>
+                <div class="typing-dot"></div>
+            </div>
+        </div>
+    `;
+    
+    if (chatSuggestions && chatSuggestions.parentNode === chatbotMessages && chatSuggestions.style.display !== 'none') {
+        chatbotMessages.insertBefore(typingDiv, chatSuggestions);
+    } else {
+        chatbotMessages.appendChild(typingDiv);
+    }
+    scrollToBottom();
+}
+
+function removeTypingIndicator() {
+    const indicator = document.getElementById('typing-indicator');
+    if (indicator) {
+        indicator.remove();
+    }
+}
+
+function scrollToBottom() {
+    chatbotMessages.scrollTop = chatbotMessages.scrollHeight;
+}
+
+// Simple "AI" Logic - Keyword Matching
+function generateResponse(input) {
+    input = input.toLowerCase();
+
+    if (input.includes('hello') || input.includes('hi') || input.includes('hey')) {
+        return "Hello there! 👋 I'm Skyie's AI assistant. How can I help you today?";
+    }
+    
+    if (input.includes('project') || input.includes('work') || input.includes('portfolio')) {
+        return "Skyie has worked on some amazing projects! 🚀 From Tech Startup Promos to Sales Forecasting Dashboards. Check out the 'Work' section to see them all!";
+    }
+
+    if (input.includes('video') || input.includes('edit') || input.includes('premiere')) {
+        return "Video editing is one of Skyie's core skills! 🎬 Expert in Premiere Pro, After Effects, and DaVinci Resolve. Need a promo or documentary edited? Skyie is your guy!";
+    }
+
+    if (input.includes('data') || input.includes('science') || input.includes('python') || input.includes('analysis')) {
+        return "Skyie is passionate about Data Science! 📊 proficient in Python, Pandas, Plotly, and Machine Learning. He's built tools for sentiment analysis and sales forecasting.";
+    }
+
+    if (input.includes('contact') || input.includes('email') || input.includes('reach') || input.includes('hire')) {
+        return "You can reach Skyie at 📧 thatskyie7@gmail.com. He is always open to discussing new projects and opportunities!";
+    }
+    
+    if (input.includes('skill') || input.includes('stack') || input.includes('technologies')) {
+        return "Skyie's tech stack includes Python, JavaScript, HTML/CSS for code, and the Adobe Suite (Premiere, AE) + DaVinci for video. A perfect blend of logic and creativity! 🎨💻";
+    }
+
+    if (input.includes('about') || input.includes('who')) {
+        return "Skyie is a 17-year-old Video Editor & Data Science student at Alard University, Pune. He loves cricket, gaming, and exploring AI technology.";
+    }
+
+    // Default response
+    return "That's an interesting question! While I'm just a bot, I'd suggest contacting Skyie directly at thatskyie7@gmail.com for more specific details. 😊";
+}
+
+/* =========================================
+   3D PROFILE CARD HOVER LOGIC (FIXED)
+   ========================================= */
+
+const profileCard = document.getElementById('profileCard3D');
+if (profileCard) {
+    const cardInner = profileCard.querySelector('.card-inner');
+    const glare = profileCard.querySelector('.card-glare');
+
+    profileCard.addEventListener('mousemove', (e) => {
+        // Force the card to stay in "active" mode by removing transition
+        cardInner.classList.remove('reset-transition');
+
+        const rect = profileCard.getBoundingClientRect();
+        
+        // Calculate mouse position relative to center of card
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        
+        // Calculate rotation (max +/- 20 degrees)
+        const centerX = rect.width / 2;
+        const centerY = rect.height / 2;
+        
+        // Invert X calculation to create "push" effect
+        const rotateY = -((x - centerX) / centerX) * 20; 
+        const rotateX = -((y - centerY) / centerY) * 20;
+
+        cardInner.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+
+        // --- GLARE EFFECT LOGIC ---
+        if (glare) {
+            glare.style.opacity = '1';
+            // Move gradient center to mouse position
+            glare.style.background = `radial-gradient(circle at ${x}px ${y}px, rgba(255,255,255,0.3) 0%, rgba(255,255,255,0) 80%)`;
+        }
+    });
+
+    profileCard.addEventListener('mouseleave', () => {
+        // Add transition back for smooth reset
+        cardInner.classList.add('reset-transition');
+        cardInner.style.transform = 'rotateX(0deg) rotateY(0deg)';
+        
+        if (glare) {
+            glare.style.opacity = '0';
+        }
+    });
+
+    profileCard.addEventListener('mouseenter', () => {
+        cardInner.classList.remove('reset-transition');
+    });
+}
+
+/* =========================================
+   3D CONTACT CARD HOVER LOGIC (NEW)
+   ========================================= */
+
+const contactCard = document.getElementById('contactCard3D');
+if (contactCard) {
+    // NOTE: For contact card, the element rotating is the card itself, not an inner '.card-inner'
+    const glare = contactCard.querySelector('.card-glare');
+
+    contactCard.addEventListener('mousemove', (e) => {
+        // Force the card to stay in "active" mode by removing transition
+        contactCard.classList.remove('reset-transition');
+
+        const rect = contactCard.getBoundingClientRect();
+        
+        // Calculate mouse position relative to center of card
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        
+        // Calculate rotation (max +/- 20 degrees)
+        const centerX = rect.width / 2;
+        const centerY = rect.height / 2;
+        
+        // Same physics as profile card: Push away from mouse
+        const rotateY = -((x - centerX) / centerX) * 10; // Reduced intensity slightly for larger card
+        const rotateX = -((y - centerY) / centerY) * 10;
+
+        contactCard.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+
+        // --- GLARE EFFECT LOGIC ---
+        if (glare) {
+            glare.style.opacity = '1';
+            // Move gradient center to mouse position
+            glare.style.background = `radial-gradient(circle at ${x}px ${y}px, rgba(255,255,255,0.3) 0%, rgba(255,255,255,0) 80%)`;
+        }
+    });
+
+    contactCard.addEventListener('mouseleave', () => {
+        // Add transition back for smooth reset
+        contactCard.classList.add('reset-transition');
+        contactCard.style.transform = 'rotateX(0deg) rotateY(0deg)';
+        
+        if (glare) {
+            glare.style.opacity = '0';
+        }
+    });
+
+    contactCard.addEventListener('mouseenter', () => {
+        contactCard.classList.remove('reset-transition');
+    });
+}

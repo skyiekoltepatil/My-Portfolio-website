@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portfolio - Video Editor &amp; Data Science Student</title>
+    <title>Portfolio - Video Editor & Data Science Student</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -83,6 +83,9 @@
                 <div class="about-profile-card">
                     <div class="profile-card-3d" id="profileCard3D">
                         <div class="card-inner">
+                            <!-- Glare Effect Container -->
+                            <div class="card-glare"></div>
+                            
                             <div class="card-content-wrapper">
                                 <div class="card-header">
                                     <h3 class="card-name">Skyie@</h3>
@@ -328,14 +331,34 @@
         </div>
     </section>
 
-    <!-- Contact Section -->
+    <!-- Contact Section with 3D Hover -->
     <section id="contact" class="contact section-padding">
         <div class="container">
-            <h2 class="section-title fade-in">Let's Work Together</h2>
-            <div class="contact-content fade-in">
-                <b>I'm always open to discussing new projects, creative ideas, or opportunities to be part of your visions. Feel free to reach out!</b>
-        </div> <div class="container">
-                        <a href="mailto:thatskyie7@gmail.com"class="btn btn-primary">Contact Me</a>
+            <!-- Wrapper handles fade-in and perspective -->
+            <div class="contact-card-wrapper fade-in">
+                <!-- Card handles 3D rotation -->
+                <div class="contact-card" id="contactCard3D">
+                    <!-- Glare effect -->
+                    <div class="card-glare"></div>
+                    
+                    <div class="contact-content-inner">
+                        <h2 class="contact-title">Let's Collaborate</h2>
+                        
+                        <p class="contact-text">
+                            I'm currently looking for new opportunities. Whether you have a
+                            question or just want to say hi, my inbox is always open!
+                        </p>
+                        
+                        <a href="mailto:thatskyie7@gmail.com" class="contact-cta-btn">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                                <polyline points="22,6 12,13 2,6"></polyline>
+                            </svg>
+                            Say Hello
+                        </a>
+                    </div>
+                </div>
+            </div>
         </div>
     </section>
 
@@ -344,10 +367,10 @@
         <div class="container">
             <div class="footer-content">
                 <div class="footer-section">
-                    <h4><b>Skyie@</h4></b>
+                    <h4><b>Skyie@</b></h4>
                     <span>Curious Learner</span>
                     <br>
-                    <span>Exploring AI,and turning imagination into innovation. </span>
+                    <span>Exploring AI, and turning imagination into innovation. </span>
                 </div>
                 <div class="footer-section">
                     <h4>Quick Links</h4>
@@ -386,6 +409,68 @@
             </div>
         </div>
     </footer>
+
+    <!-- SKYIE AI CHATBOT -->
+    <div id="skyie-chatbot-container">
+        <!-- Toggle Button -->
+        <button id="chatbot-toggle" class="chatbot-toggle" aria-label="Toggle Chatbot">
+            <span class="chatbot-icon">@</span>
+            <span class="chatbot-close-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                </svg>
+            </span>
+        </button>
+
+        <!-- Chat Window -->
+        <div id="chatbot-widget" class="chatbot-widget">
+            <div class="chatbot-header">
+                <div class="chatbot-info">
+                    <span class="status-dot-online"></span>
+                    <div class="chatbot-title-container">
+                        <div class="chatbot-title">Skyie AI</div>
+                        <div class="chatbot-subtitle">Ask me anything</div>
+                    </div>
+                </div>
+                <button id="chatbot-close" class="chatbot-header-close" aria-label="Close Chat">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="18" y1="6" x2="6" y2="18"></line>
+                        <line x1="6" y1="6" x2="18" y2="18"></line>
+                    </svg>
+                </button>
+            </div>
+            
+            <div class="chatbot-body" id="chatbot-messages">
+                <!-- Initial Bot Message -->
+                <div class="chat-message bot fade-in-msg">
+                    <div class="chat-avatar">@</div>
+                    <div class="chat-bubble">
+                        <div class="chat-text">Hi! I'm Skyie AI. Ask me about Skyie's projects, editing skills, or how to contact him! 🎨🤖</div>
+                    </div>
+                </div>
+                
+                <!-- Suggestions -->
+                <div class="chat-suggestions" id="chat-suggestions">
+                    <button class="suggestion-btn" onclick="sendSuggestion('Tell me about your video editing')">Tell me about video editing</button>
+                    <button class="suggestion-btn" onclick="sendSuggestion('What data science projects do you have?')">Data Science projects?</button>
+                    <button class="suggestion-btn" onclick="sendSuggestion('How can I contact you?')">How can I contact you?</button>
+                </div>
+            </div>
+
+            <div class="chatbot-footer">
+                <div class="input-container">
+                    <input type="text" id="chatbot-input" placeholder="Ask about my work..." autocomplete="off">
+                    <button id="chatbot-send" aria-label="Send Message">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <line x1="22" y1="2" x2="11" y2="13"></line>
+                            <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <script src="app.js"></script>
 </body>
