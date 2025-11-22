@@ -504,7 +504,8 @@
   
   /* --- NEW CARD STYLE (GREEN DESIGN) --- */
   .card-design-green {
-      background: linear-gradient(to bottom, rgba(15, 23, 42, 0.3), rgba(15, 23, 42, 0.8)), url('1.jpeg');
+      /* UPDATED: Reduced overlay opacity for brighter image */
+      background: linear-gradient(to bottom, rgba(15, 23, 42, 0.05), rgba(15, 23, 42, 0.2)), url('1.jpeg');
       background-size: cover;
       background-position: center;
       display: flex;
