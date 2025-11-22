@@ -504,7 +504,9 @@
   
   /* --- NEW CARD STYLE (GREEN DESIGN) --- */
   .card-design-green {
-      background: linear-gradient(180deg, #2F4F4F 0%, #0b1e10 100%); /* Deep Green Gradient */
+      background: linear-gradient(to bottom, rgba(15, 23, 42, 0.3), rgba(15, 23, 42, 0.8)), url('1.jpeg');
+      background-size: cover;
+      background-position: center;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -603,7 +605,7 @@
       width: 80%;
       height: auto;
       object-fit: contain;
-      filter: grayscale(20%) sepia(10%) hue-rotate(90deg); /* Subtle green tint to match theme */
+      /* filter: grayscale(20%) sepia(10%) hue-rotate(90deg); REMOVED: To keep natural colors of uploaded image */
       mask-image: linear-gradient(to bottom, black 70%, transparent 100%);
       -webkit-mask-image: linear-gradient(to bottom, black 70%, transparent 100%);
   }
