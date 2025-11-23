@@ -466,6 +466,17 @@
       flex: 0 0 400px;
       animation-delay: 0.2s;
       perspective: 1000px;
+      
+      /* --- ADDED: Sticky Positioning for Scroll Animation --- */
+      position: -webkit-sticky; /* Safari */
+      position: sticky;
+      /* Top offset to clear navbar (20px + approx 80px navbar height + gap) */
+      top: 120px; 
+      /* Align self flex-start is crucial to prevent stretching, allowing sticky to move */
+      align-self: flex-start; 
+      z-index: 10;
+      /* Optional: Ensure height is defined by content */
+      height: fit-content;
   }
   
   /* About Text Content Column */
@@ -1469,10 +1480,13 @@
           align-items: center;
       }
       
+      /* --- RESET Sticky for Mobile --- */
       .about-profile-card {
           flex: 0 0 auto;
           width: 100%;
           max-width: 380px;
+          position: relative; /* Reset position */
+          top: 0; /* Reset top */
       }
       
       .profile-card-3d {
