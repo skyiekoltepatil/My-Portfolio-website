@@ -213,6 +213,34 @@ window.addEventListener('load', () => {
     });
 });
 
+// /* =========================================
+//    THEME SWITCH LOGIC (DARK/LIGHT MODE)
+//    ========================================= */
+
+// const themeSwitch = document.querySelector('.theme-switch input[type="checkbox"]');
+// const currentTheme = localStorage.getItem('theme');
+
+// // Apply saved theme on load
+// if (currentTheme) {
+//     document.body.classList.add(currentTheme);
+
+//     if (currentTheme === 'dark-mode') {
+//         themeSwitch.checked = true;
+//     }
+// }
+
+// // Event listener for toggle
+// themeSwitch.addEventListener('change', function(e) {
+//     if (e.target.checked) {
+//         document.body.classList.add('dark-mode');
+//         localStorage.setItem('theme', 'dark-mode');
+//     } else {
+//         document.body.classList.remove('dark-mode');
+//         localStorage.setItem('theme', 'light-mode');
+//     }
+// });
+
+
 /* =========================================
    SKYIE AI CHATBOT LOGIC
    ========================================= */
